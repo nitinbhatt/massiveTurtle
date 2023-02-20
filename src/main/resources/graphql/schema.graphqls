@@ -1,0 +1,39 @@
+type Query {
+    ping: String!
+    ipAddressDetails(ipAddress: String): IpAddressResponse
+    ipAddressInfo(ipAddress: String): [IpInfo]
+}
+
+union IpInfo = IpComment | IpResolution
+
+type IpAddressResponse {
+    ipAddress: String
+    network: String
+    country: String
+    tags: [String]
+    lastAnalysisStats: AnalysisStats
+    comments: [IpComment]!
+    resolutions: [IpResolution]!
+}
+
+type IpComment implements Date {
+    text: String
+    date: String
+}
+
+type IpResolution implements Date {
+    hostName: String
+    date: String
+}
+
+type AnalysisStats {
+    harmless: Int
+    malicious: Int
+    suspicious: Int
+    undetected: Int
+    timeout: Int
+}
+
+interface Date {
+    date: String
+}
