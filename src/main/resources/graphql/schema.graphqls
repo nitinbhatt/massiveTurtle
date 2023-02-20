@@ -6,6 +6,9 @@ type Query {
 
 union IpInfo = IpComment | IpResolution
 
+# IP Analysis response. This is a subset of
+# attributes we are interested in when getting
+# a report for an IP address
 type IpAddressResponse {
     ipAddress: String
     network: String
@@ -15,6 +18,7 @@ type IpAddressResponse {
     comments: [IpComment]!
     resolutions: [IpResolution]!
 }
+
 
 type IpComment implements Date {
     text: String

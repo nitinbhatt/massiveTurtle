@@ -44,6 +44,11 @@ public class VirusTotalService {
                         .build());
     }
 
+    /**
+     * Make API call to virus total and get IP Address response for give ip
+     * @param ipAddress
+     * @return
+     */
     public Optional<IpAddressResponse> getIpAddressReport(final String ipAddress) {
         Optional<IpReportResponse> responseOptional = vtClient.getIpReport(ipAddress);
         return responseOptional.isPresent() && responseOptional.get().getData() != null
@@ -51,6 +56,12 @@ public class VirusTotalService {
                 : Optional.empty();
     }
 
+    /**
+     * Make API call to virus total endpoints and get comments available for an ip
+     * address
+     * @param ipAddress
+     * @return
+     */
     public List<IpComment> getCommentsForIp(final String ipAddress) {
 
         Optional<IpCommentsResponse> responseOptional = vtClient.getIpComments(ipAddress);
@@ -73,6 +84,11 @@ public class VirusTotalService {
         }
     }
 
+    /**
+     * Get historic resolutions for a given IP address
+     * @param ipAddress
+     * @return
+     */
     public List<IpResolution> getResolutionsForIp(final String ipAddress) {
 
         Optional<IpResolutionResponse> responseOptional = vtClient.getIpResolutions(ipAddress);
