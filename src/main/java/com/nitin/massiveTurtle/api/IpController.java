@@ -30,11 +30,21 @@ public class IpController {
         return vtService.getResolutionsForIp(ipAddress.getIpAddress());
     }
 
+    /**
+     * Get details of an IP Address by calling IP Report endpoint
+     * @param ipAddress IP Address to get the information for
+     * @return Gets a complete IP Report
+     */
     @QueryMapping
     public Optional<IpAddressResponse> ipAddressDetails(@Argument final String ipAddress) {
         return vtService.getIpAddressReport(ipAddress);
     }
 
+    /**
+     * Retrieve metadata information available about an IP address
+     * @param ipAddress Address to get information for
+     * @return Meta information (Comments and resolutions)
+     */
     @QueryMapping
     public Optional<List<IpMetaData>> ipAddressInfo(@Argument final String ipAddress) {
         List<IpMetaData> ret = new LinkedList<>();

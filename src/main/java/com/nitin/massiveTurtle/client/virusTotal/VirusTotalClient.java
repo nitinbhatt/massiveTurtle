@@ -34,6 +34,11 @@ public class VirusTotalClient {
         headers.add("x-apikey", config.getApiKey());
     }
 
+    /**
+     * Get IP Report
+     * @param ipAddress
+     * @return
+     */
     public Optional<IpReportResponse> getIpReport(final String ipAddress) {
         URI uri = URI.create(String.format(IP_REPORT_URL, ipAddress));
 
@@ -46,6 +51,11 @@ public class VirusTotalClient {
                 : Optional.empty();
     }
 
+    /**
+     * Get comments for an ip address
+     * @param ipAddress
+     * @return
+     */
     public Optional<IpCommentsResponse> getIpComments(final String ipAddress) {
 
         URI uri = URI.create(String.format(IP_COMMENTS_URL, ipAddress));
@@ -62,6 +72,11 @@ public class VirusTotalClient {
         }
     }
 
+    /**
+     * Get historic resolutions for an IP
+     * @param ipAddress
+     * @return
+     */
     public Optional<IpResolutionResponse> getIpResolutions(final String ipAddress) {
         URI uri = URI.create(String.format(IP_RESOLUTIONS_URL, ipAddress));
 
