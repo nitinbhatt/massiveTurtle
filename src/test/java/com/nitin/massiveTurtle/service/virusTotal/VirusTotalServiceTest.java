@@ -5,11 +5,13 @@ import com.nitin.massiveTurtle.client.virusTotal.VirusTotalClient;
 import com.nitin.massiveTurtle.domain.IpAddressResponse;
 import com.nitin.massiveTurtle.domain.virusTotal.*;
 import com.nitin.massiveTurtle.utils.DateUtils;
-import graphql.Assert;
-import graphql.com.google.common.collect.ImmutableList;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.google.common.collect.ImmutableList;
 
 import org.mockito.Mock;
 
@@ -64,10 +66,10 @@ public class VirusTotalServiceTest {
         IpAddressResponse response = responseOptional.get();
         Assert.assertNotNull(response);
 
-        Assert.assertTrue(response.getIpAddress().equals("1.1.1.1"));
-        Assert.assertTrue(response.getNetwork().equals("_NETWORK_"));
-        Assert.assertTrue(response.getTags().size() == 2);
-        Assert.assertTrue(response.getCountry().equals("US"));
+        Assert.assertEquals(response.getIpAddress(), "1.1.1.1");
+        Assert.assertEquals(response.getNetwork(), ("_NETWORK_"));
+        Assert.assertEquals(response.getTags().size() , 2);
+        Assert.assertEquals(response.getCountry(), "US");
     }
 
     @Test
@@ -88,8 +90,8 @@ public class VirusTotalServiceTest {
         Assert.assertTrue(responseOptional.isPresent());
         IpAddressResponse ipAddressResponse = responseOptional.get();
         Assert.assertNotNull(ipAddressResponse);
-        Assert.assertTrue(ipAddressResponse.getTags().size() == 2);
-        Assert.assertTrue(ipAddressResponse.getNetwork().equals("_TEST_"));
+        Assert.assertEquals(ipAddressResponse.getTags().size(), 2);
+        Assert.assertEquals(ipAddressResponse.getNetwork(), "_TEST_");
     }
 
     private IpComment buildIpComment(final long date, final String text) {
@@ -122,10 +124,10 @@ public class VirusTotalServiceTest {
 
         List<IpComment> commentList = virusTotalService.getCommentsForIp("1.1.1.1");
         Assert.assertFalse(commentList.isEmpty());
-        Assert.assertTrue(commentList.size() == 2);
-        Assert.assertTrue(commentList.get(0).getText().equals("a"));
-        Assert.assertTrue(commentList.get(0).getDate().equals("2021-01-19"));
-        Assert.assertTrue(commentList.get(1).getText().equals("b"));
-        Assert.assertTrue(commentList.get(1).getDate().equals("2023-01-19"));
+        Assert.assertEquals(commentList.size(), 2);
+        Assert.assertEquals(commentList.get(0).getText(), "a");
+        Assert.assertEquals(commentList.get(0).getDate(), "2021-01-19");
+        Assert.assertEquals(commentList.get(1).getText(), "b");
+        Assert.assertEquals(commentList.get(1).getDate(), "2023-01-19");
     }
 }
