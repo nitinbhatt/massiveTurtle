@@ -9,6 +9,13 @@ VirusTotal has an available API that is free to use.
 Apis available here:
 https://developers.virustotal.com/reference/overview
 
+Register for a virus total account and generate an API Key.
+
+Update application.properties
+```agsl
+massive-turtle.source.virus-total.api-key=YOUR_API_KEY
+```
+
 
 ## How to run massiveTurtle
 
