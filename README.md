@@ -1,7 +1,7 @@
 # massiveTurtle
 A GraphQL interface to gather threat information from free sources
 
-## Current Inggrations
+## Current Integrations
 
 ### VirusTotal
 VirusTotal has an available API that is free to use.
