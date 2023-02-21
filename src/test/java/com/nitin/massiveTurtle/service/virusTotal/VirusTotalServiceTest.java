@@ -36,30 +36,27 @@ public class VirusTotalServiceTest {
     }
 
     private LastAnalysisStats buildLastAnalysisStats(int a, int b, int c, int d) {
-        LastAnalysisStats lastAnalysisStats = new LastAnalysisStats();
-        lastAnalysisStats.setHarmless(1);
-        lastAnalysisStats.setMalicious(2);
-        lastAnalysisStats.setTimeout(4);
-        lastAnalysisStats.setSuspicious(8);
-        return lastAnalysisStats;
+        return LastAnalysisStats.builder()
+                .harmless(a)
+                .malicious(b)
+                .timeout(c)
+                .suspicious(d)
+                .build();
     }
 
     private IpReportAttributes buildIpReportAttributes(final String country, final String network, List<String> tags) {
-        IpReportAttributes attributes = new IpReportAttributes();
-        attributes.setCountry(country);
-        attributes.setTags(tags);
-        attributes.setNetwork(network);
-        return attributes;
+        return IpReportAttributes.builder()
+                .country(country)
+                .tags(tags)
+                .network(network)
+                .build();
     }
 
     @Test
     public void testBuildIpAddressResponse() {
 
-        IpReportData data = new IpReportData();
         IpReportAttributes attributes = buildIpReportAttributes("US", "_NETWORK_", ImmutableList.of("a", "b"));
-        data.setAttributes(attributes);
-        data.setId("1.1.1.1");
-        data.setType("__TEST__");
+        IpReportData data = IpReportData.builder().attributes(attributes).id("1.1.1.1").type("__TEST__").build();
 
         Optional<IpAddressResponse> responseOptional = virusTotalService.buildIpAddressResponse(data);
         Assert.assertTrue(responseOptional.isPresent());
@@ -74,15 +71,11 @@ public class VirusTotalServiceTest {
 
     @Test
     public void testIpaddressReport() {
-        IpReportResponse response = new IpReportResponse();
-        IpReportData ipReportData = new IpReportData();
-        ipReportData.setType("IP Address");
-        ipReportData.setId("1.1.1.1");
-        IpReportAttributes attributes = new IpReportAttributes();
-        attributes.setTags(ImmutableList.of("A", "B"));
-        attributes.setNetwork("_TEST_");
-        ipReportData.setAttributes(attributes);
-        response.setData(ipReportData);
+
+        IpReportAttributes attributes = IpReportAttributes.builder().tags(ImmutableList.of("A", "B")).network("_TEST_").build();
+        IpReportData ipReportData = IpReportData.builder().type("IP Address").id("1.1.1.1").attributes(attributes). build();
+
+        IpReportResponse response = IpReportResponse.builder().data(ipReportData).build();
 
         Mockito.doReturn(Optional.of(response)).when(vtClient).getIpReport("1.1.1.1");
 
@@ -95,30 +88,26 @@ public class VirusTotalServiceTest {
     }
 
     private IpComment buildIpComment(final long date, final String text) {
-        IpComment comment = new IpComment();
+        IpComment comment = IpComment.builder().text(text).build();
         comment.setDate(DateUtils.convertToDate(date));
-        comment.setText(text);
         return comment;
     }
 
     private IpCommentsData buildIpCommentsData(final long date, final String text) {
-        IpCommentsData data = new IpCommentsData();
-        IpCommentsAttributes attributes = new IpCommentsAttributes();
-        attributes.setDate(date);
-        attributes.setText(text);
-        data.setAttributes(attributes);
-        return data;
+
+        IpCommentsAttributes attributes = IpCommentsAttributes.builder()
+                .date(date).text(text).build();
+
+        return IpCommentsData.builder().attributes(attributes).build();
     }
 
     @Test
     public void testIpAddressComments() {
-
-        IpCommentsResponse response = new IpCommentsResponse();
         List<IpCommentsData> ipCommentsData = ImmutableList.of(
                 buildIpCommentsData(1611122234, "a"),
                 buildIpCommentsData(1674194234, "b")
         );
-        response.setData(ipCommentsData);
+        IpCommentsResponse response = IpCommentsResponse.builder().data(ipCommentsData).build();
 
         Mockito.doReturn(Optional.of(response)).when(vtClient).getIpComments("1.1.1.1");
 

@@ -24,8 +24,8 @@ public class VirusTotalService {
 
     /**
      * Build {@link IpAddressResponse} from {@link IpReportData} received from HTTP request
-     * @param data
-     * @return
+     * @param data IP Report date to fetch IP Response for
+     * @return {@link IpAddressResponse} info
      */
     Optional<IpAddressResponse> buildIpAddressResponse(final IpReportData data) {
         if (data == null || data.getAttributes() == null) {
@@ -71,8 +71,7 @@ public class VirusTotalService {
             response.getData().forEach(d -> {
                 IpCommentsAttributes attr = d.getAttributes();
                 if (attr != null) {
-                    IpComment comment = new IpComment();
-                    comment.setText(attr.getText());
+                    IpComment comment = IpComment.builder().text(attr.getText()).build();
                     comment.setDate(DateUtils.convertToDate(attr.getDate()*1000));
                     comments.add(comment);
                 }
@@ -98,8 +97,7 @@ public class VirusTotalService {
             response.getData().forEach(d -> {
                 IpResolutionAttributes attr = d.getAttributes();
                 if (attr != null) {
-                    IpResolution resolution = new IpResolution();
-                    resolution.setHostName(attr.getHostName());
+                    IpResolution resolution = IpResolution.builder().hostName(attr.getHostName()).build();
                     resolution.setDate(DateUtils.convertToDate(attr.getDate()*1000));
                     resolutions.add(resolution);
                 }
