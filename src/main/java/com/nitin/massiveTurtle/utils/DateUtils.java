@@ -1,14 +1,11 @@
 package com.nitin.massiveTurtle.utils;
 
+import org.apache.commons.lang.time.FastDateFormat;
 import org.springframework.stereotype.Component;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 public class DateUtils {
-
-    private static final SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    private static final FastDateFormat fastDateFormat = FastDateFormat.getInstance("yyyy-MM-dd");
 
     /**
      * Convert a long time stamp (in milliseconds) to a human-readable format
@@ -16,6 +13,6 @@ public class DateUtils {
      * @return
      */
     public static String convertToDate(final Long timestamp) {
-        return dateFormat.format(timestamp);
+        return fastDateFormat.format(timestamp);
     }
 }
