@@ -4,6 +4,7 @@ import com.nitin.massiveTurtle.client.virusTotal.VirusTotalClient;
 import com.nitin.massiveTurtle.domain.IpAddressResponse;
 import com.nitin.massiveTurtle.domain.virusTotal.*;
 import com.nitin.massiveTurtle.utils.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class VirusTotalService {
 
@@ -50,6 +52,7 @@ public class VirusTotalService {
      * @return
      */
     public Optional<IpAddressResponse> getIpAddressReport(final String ipAddress) {
+        log.info("Calling Get IP Address report for {}", ipAddress);
         Optional<IpReportResponse> responseOptional = vtClient.getIpReport(ipAddress);
         return responseOptional.isPresent() && responseOptional.get().getData() != null
                 ? buildIpAddressResponse(responseOptional.get().getData())
@@ -63,7 +66,7 @@ public class VirusTotalService {
      * @return
      */
     public List<IpComment> getCommentsForIp(final String ipAddress) {
-
+        log.info("Calling Get Comments for {}", ipAddress);
         Optional<IpCommentsResponse> responseOptional = vtClient.getIpComments(ipAddress);
         if (responseOptional.isPresent()) {
             IpCommentsResponse response = responseOptional.get();
@@ -90,6 +93,7 @@ public class VirusTotalService {
      */
     public List<IpResolution> getResolutionsForIp(final String ipAddress) {
 
+        log.info("Calling Get Resolutions for {}", ipAddress);
         Optional<IpResolutionResponse> responseOptional = vtClient.getIpResolutions(ipAddress);
         if (responseOptional.isPresent()) {
             IpResolutionResponse response = responseOptional.get();
